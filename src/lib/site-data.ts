@@ -58,6 +58,6 @@ export type Review = {
   is_active: boolean; sort_order: number;
 };
 export async function fetchReviews(): Promise<Review[]> {
-  const { data } = await supabase.from("reviews" as any).select("*").eq("is_active", true).order("sort_order");
+  const { data } = await (supabase as any).from("reviews").select("*").eq("is_active", true).order("sort_order");
   return (data ?? []) as Review[];
 }
