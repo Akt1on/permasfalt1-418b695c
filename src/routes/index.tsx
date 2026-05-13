@@ -300,6 +300,38 @@ function HomePage() {
 
       {/* CTA */}
       <section className="py-24">
+        {/* GEOGRAPHY */}
+        <div className="container-x mb-24">
+          <div className="relative overflow-hidden rounded-3xl glass p-10 md:p-12">
+            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+            <div className="relative grid lg:grid-cols-[1fr_2fr] gap-10 items-center">
+              <div>
+                <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">География работ</div>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight">Работаем по всему <span className="text-gradient-gold">Пермскому краю</span></h2>
+                <p className="mt-4 text-muted-foreground">Выезд инженера на замер — бесплатно в любую точку региона.</p>
+              </div>
+              <div className="flex flex-wrap gap-2.5">
+                {GEO.map((city) => (
+                  <div key={city} className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-sm hover:border-primary/40 transition">
+                    <MapPin className="h-3.5 w-3.5 text-primary" /> {city}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="container-x mb-24">
+          <div className="max-w-3xl mb-12">
+            <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Частые вопросы</div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-[1.05]">Отвечаем на главное</h2>
+          </div>
+          <div className="grid gap-3 max-w-4xl">
+            {FAQS.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
+          </div>
+        </div>
+
         <div className="container-x">
           <div className="relative overflow-hidden rounded-3xl glass p-10 md:p-16">
             <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
@@ -315,6 +347,23 @@ function HomePage() {
         </div>
       </section>
     </>
+  );
+}
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="glass rounded-2xl overflow-hidden transition hover:border-primary/40">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+        <span className="font-display text-lg font-semibold">{q}</span>
+        <div className="h-8 w-8 rounded-full bg-primary/15 grid place-items-center shrink-0">
+          {open ? <Minus className="h-4 w-4 text-primary" /> : <Plus className="h-4 w-4 text-primary" />}
+        </div>
+      </button>
+      {open && (
+        <div className="px-6 pb-6 -mt-1 text-muted-foreground leading-relaxed animate-float-up">{a}</div>
+      )}
+    </div>
   );
 }
 
