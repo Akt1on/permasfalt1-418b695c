@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote } from "lucide-react";
+import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote, MapPin, Plus, Minus } from "lucide-react";
 import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
@@ -15,9 +15,32 @@ export const Route = createFileRoute("/")({
       { title: "Пермь Асфальт 59 — асфальтирование, плитка, благоустройство в Перми" },
       { name: "description", content: "Асфальтирование территорий, укладка тротуарной плитки, демонтаж, аренда спецтехники в Перми. Гарантия 3 года, выезд бесплатно." },
     ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: FAQS.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }),
+    }],
   }),
   component: HomePage,
 });
+
+const FAQS = [
+  { q: "Сколько стоит асфальтирование 1 м² в Перми?", a: "Стоимость зависит от толщины слоя, площади и состояния основания. Базовая цена — от 1 500 ₽ за м² при площади от 100 м². Точную смету подготовим бесплатно после выезда замерщика." },
+  { q: "Какую гарантию вы даёте на работы?", a: "Гарантия на все работы под ключ — 3 года. Гарантия закреплена в договоре. Если в течение этого срока появятся дефекты по нашей вине — устраним за свой счёт." },
+  { q: "Работаете ли вы зимой?", a: "Да, выполняем расчистку, вывоз снега, демонтажные и подготовительные работы круглый год. Укладку асфальта планируем с апреля по октябрь — это требование технологии." },
+  { q: "Заключаете ли вы договор с юр. лицами?", a: "Да, работаем с физлицами, ИП и юр. лицами. Все документы — договор, смета, акты, счета-фактуры. Безналичный расчёт с НДС." },
+  { q: "Сколько занимает асфальтирование участка 200 м²?", a: "В среднем 1–2 рабочих дня при готовом основании. Если требуется демонтаж и подготовка — добавьте 2–3 дня. Точные сроки фиксируем в договоре." },
+  { q: "Куда выезжаете кроме Перми?", a: "Работаем по всему Пермскому краю: Краснокамск, Березники, Соликамск, Чайковский, Кунгур, Лысьва, Чусовой и другие города. Выезд замерщика — бесплатно." },
+];
+
+const GEO = ["Пермь", "Краснокамск", "Березники", "Соликамск", "Чайковский", "Кунгур", "Лысьва", "Чусовой", "Добрянка", "Оса", "Нытва", "Верещагино"];
 
 function HomePage() {
   const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
