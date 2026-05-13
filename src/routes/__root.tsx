@@ -3,6 +3,7 @@ import { Outlet, createRootRouteWithContext, useRouter, useRouterState, HeadCont
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { FloatingContacts } from "@/components/site/FloatingContacts";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -40,8 +41,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Пермь Асфальт 59" },
       { property: "og:description", content: "Асфальтирование и благоустройство территорий в Перми с 2010 года." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Пермь Асфальт 59" },
+      { property: "og:locale", content: "ru_RU" },
+      { name: "theme-color", content: "#1a1814" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: "Пермь Асфальт 59",
+        image: "/og-image.jpg",
+        "@id": "https://permasfalt59.ru",
+        url: "https://permasfalt59.ru",
+        telephone: "+7 (342) 277-77-10",
+        priceRange: "₽₽",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Шоссе Космонавтов, 328Л",
+          addressLocality: "Пермь",
+          addressRegion: "Пермский край",
+          addressCountry: "RU",
+        },
+        areaServed: ["Пермь", "Пермский край"],
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          opens: "00:00", closes: "23:59",
+        },
+        sameAs: ["https://t.me/permasfalt59"],
+      }),
+    }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -69,6 +100,7 @@ function RootComponent() {
         <Outlet />
       </main>
       {!isAdmin && <Footer />}
+      {!isAdmin && <FloatingContacts />}
       <Toaster theme="dark" position="top-right" />
     </QueryClientProvider>
   );
