@@ -51,3 +51,13 @@ export async function fetchPricing(serviceId: string) {
   const { data } = await supabase.from("pricing_items").select("*").eq("service_id", serviceId).order("sort_order");
   return data ?? [];
 }
+
+export type Review = {
+  id: string; author_name: string; author_role: string | null;
+  content: string; rating: number; photo_url: string | null;
+  is_active: boolean; sort_order: number;
+};
+export async function fetchReviews(): Promise<Review[]> {
+  const { data } = await (supabase as any).from("reviews").select("*").eq("is_active", true).order("sort_order");
+  return (data ?? []) as Review[];
+}

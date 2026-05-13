@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles } from "lucide-react";
-import { fetchServices, fetchProjects, fetchSettings } from "@/lib/site-data";
+import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote } from "lucide-react";
+import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { DynIcon } from "@/components/site/icon";
@@ -23,6 +23,7 @@ function HomePage() {
   const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
   const { data: projects = [] } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects });
   const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
+  const { data: reviews = [] } = useQuery({ queryKey: ["reviews"], queryFn: fetchReviews });
   const hero = settings?.hero ?? {};
   const about = settings?.about ?? {};
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
@@ -236,6 +237,33 @@ function HomePage() {
           ))}
         </div>
       </Section>
+
+      {/* REVIEWS */}
+      {reviews.length > 0 && (
+        <Section eyebrow="Отзывы" title="Что говорят клиенты" subtitle="Более 500 завершённых проектов в Перми и крае.">
+          <div className="grid md:grid-cols-3 gap-5 mt-8">
+            {reviews.map((r, i) => (
+              <motion.div key={r.id}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="glass rounded-2xl p-7 relative"
+              >
+                <Quote className="h-8 w-8 text-primary/40 absolute top-5 right-5" />
+                <div className="flex gap-0.5 mb-3">
+                  {Array.from({ length: r.rating }).map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-sm leading-relaxed text-foreground/90">«{r.content}»</p>
+                <div className="mt-5 pt-5 border-t border-border/50">
+                  <div className="font-semibold">{r.author_name}</div>
+                  {r.author_role && <div className="text-xs text-muted-foreground mt-0.5">{r.author_role}</div>}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* CTA */}
       <section className="py-24">

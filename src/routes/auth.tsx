@@ -15,7 +15,13 @@ function AuthPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const fn = mode === "login" ? supabase.auth.signInWithPassword({ email, password }) : supabase.auth.signUp({ email, password });
+    // Allow short alias "admin" → admin@permasfalt59.ru
+    const resolvedEmail = email.trim().toLowerCase() === "admin"
+      ? "admin@permasfalt59.ru"
+      : email.trim();
+    const fn = mode === "login"
+      ? supabase.auth.signInWithPassword({ email: resolvedEmail, password })
+      : supabase.auth.signUp({ email: resolvedEmail, password });
     const { error } = await fn;
     setLoading(false);
     if (error) { toast.error(error.message); return; }
@@ -29,7 +35,7 @@ function AuthPage() {
         <h1 className="font-display text-3xl font-bold mb-1">{mode === "login" ? "Вход" : "Регистрация"}</h1>
         <p className="text-sm text-muted-foreground mb-6">Доступ к админ-панели</p>
         <form onSubmit={submit} className="grid gap-3">
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail"
+          <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Логин или e-mail"
             className="bg-input border border-border rounded-lg px-4 py-3 focus:border-primary focus:outline-none" />
           <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Пароль"
             className="bg-input border border-border rounded-lg px-4 py-3 focus:border-primary focus:outline-none" />
