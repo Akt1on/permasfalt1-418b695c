@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote } from "lucide-react";
+import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote, MapPin, Plus, Minus } from "lucide-react";
 import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
@@ -15,9 +15,32 @@ export const Route = createFileRoute("/")({
       { title: "Пермь Асфальт 59 — асфальтирование, плитка, благоустройство в Перми" },
       { name: "description", content: "Асфальтирование территорий, укладка тротуарной плитки, демонтаж, аренда спецтехники в Перми. Гарантия 3 года, выезд бесплатно." },
     ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: FAQS.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }),
+    }],
   }),
   component: HomePage,
 });
+
+const FAQS = [
+  { q: "Сколько стоит асфальтирование 1 м² в Перми?", a: "Стоимость зависит от толщины слоя, площади и состояния основания. Базовая цена — от 1 500 ₽ за м² при площади от 100 м². Точную смету подготовим бесплатно после выезда замерщика." },
+  { q: "Какую гарантию вы даёте на работы?", a: "Гарантия на все работы под ключ — 3 года. Гарантия закреплена в договоре. Если в течение этого срока появятся дефекты по нашей вине — устраним за свой счёт." },
+  { q: "Работаете ли вы зимой?", a: "Да, выполняем расчистку, вывоз снега, демонтажные и подготовительные работы круглый год. Укладку асфальта планируем с апреля по октябрь — это требование технологии." },
+  { q: "Заключаете ли вы договор с юр. лицами?", a: "Да, работаем с физлицами, ИП и юр. лицами. Все документы — договор, смета, акты, счета-фактуры. Безналичный расчёт с НДС." },
+  { q: "Сколько занимает асфальтирование участка 200 м²?", a: "В среднем 1–2 рабочих дня при готовом основании. Если требуется демонтаж и подготовка — добавьте 2–3 дня. Точные сроки фиксируем в договоре." },
+  { q: "Куда выезжаете кроме Перми?", a: "Работаем по всему Пермскому краю: Краснокамск, Березники, Соликамск, Чайковский, Кунгур, Лысьва, Чусовой и другие города. Выезд замерщика — бесплатно." },
+];
+
+const GEO = ["Пермь", "Краснокамск", "Березники", "Соликамск", "Чайковский", "Кунгур", "Лысьва", "Чусовой", "Добрянка", "Оса", "Нытва", "Верещагино"];
 
 function HomePage() {
   const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
@@ -36,6 +59,8 @@ function HomePage() {
           <img src={heroImg} alt="Асфальтирование" className="h-full w-full object-cover" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
           <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
+          <div className="absolute inset-0 grid-pattern" />
+          <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[120px] animate-glow-pulse" />
         </div>
 
         <div className="container-x relative z-10 pt-32 pb-20 grid lg:grid-cols-12 gap-10 items-center">
@@ -56,7 +81,7 @@ function HomePage() {
                 return (
                   <>
                     <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">{base}</span>{" "}
-                    <span className="text-gradient-gold drop-shadow-[0_0_30px_oklch(0.78_0.16_70/0.4)]">59</span>
+                    <span className="text-gradient-gold text-glow-gold">59</span>
                   </>
                 );
               })()}
@@ -277,6 +302,38 @@ function HomePage() {
 
       {/* CTA */}
       <section className="py-24">
+        {/* GEOGRAPHY */}
+        <div className="container-x mb-24">
+          <div className="relative overflow-hidden rounded-3xl glass p-10 md:p-12">
+            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+            <div className="relative grid lg:grid-cols-[1fr_2fr] gap-10 items-center">
+              <div>
+                <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">География работ</div>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight">Работаем по всему <span className="text-gradient-gold">Пермскому краю</span></h2>
+                <p className="mt-4 text-muted-foreground">Выезд инженера на замер — бесплатно в любую точку региона.</p>
+              </div>
+              <div className="flex flex-wrap gap-2.5">
+                {GEO.map((city) => (
+                  <div key={city} className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-sm hover:border-primary/40 transition">
+                    <MapPin className="h-3.5 w-3.5 text-primary" /> {city}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="container-x mb-24">
+          <div className="max-w-3xl mb-12">
+            <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Частые вопросы</div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-[1.05]">Отвечаем на главное</h2>
+          </div>
+          <div className="grid gap-3 max-w-4xl">
+            {FAQS.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
+          </div>
+        </div>
+
         <div className="container-x">
           <div className="relative overflow-hidden rounded-3xl glass p-10 md:p-16">
             <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
@@ -292,6 +349,23 @@ function HomePage() {
         </div>
       </section>
     </>
+  );
+}
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="glass rounded-2xl overflow-hidden transition hover:border-primary/40">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+        <span className="font-display text-lg font-semibold">{q}</span>
+        <div className="h-8 w-8 rounded-full bg-primary/15 grid place-items-center shrink-0">
+          {open ? <Minus className="h-4 w-4 text-primary" /> : <Plus className="h-4 w-4 text-primary" />}
+        </div>
+      </button>
+      {open && (
+        <div className="px-6 pb-6 -mt-1 text-muted-foreground leading-relaxed animate-float-up">{a}</div>
+      )}
+    </div>
   );
 }
 

@@ -143,3 +143,21 @@
   100% { background-position: 200% 0; }
 }
 .animate-float-up { animation: float-up .8s ease-out both; }
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: .35; transform: scale(1); }
+  50% { opacity: .6; transform: scale(1.05); }
+}
+.animate-glow-pulse { animation: glow-pulse 6s ease-in-out infinite; }
+
+.grid-pattern {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 75%);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 40px oklch(0.78 0.16 70 / 0.35), 0 0 80px oklch(0.78 0.16 70 / 0.2);
+}
