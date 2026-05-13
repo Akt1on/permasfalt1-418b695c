@@ -6,6 +6,38 @@ import { CallbackForm } from "@/components/site/CallbackForm";
 import { DynIcon } from "@/components/site/icon";
 
 export const Route = createFileRoute("/services/$slug")({
+  loader: async ({ params }) => {
+    const service = await fetchService(params.slug);
+    return { service };
+  },
+  head: ({ loaderData, params }) => {
+    const s = loaderData?.service;
+    const title = s ? `${s.title} в Перми — цена от ${Number(s.price_from).toLocaleString("ru-RU")} ₽/${s.price_unit} | Пермь Асфальт 59` : "Услуга — Пермь Асфальт 59";
+    const description = s?.short_description ?? s?.description?.slice(0, 160) ?? "Профессиональные услуги по благоустройству в Перми и Пермском крае. Гарантия 3 года, бесплатный выезд.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: `/services/${params.slug}` },
+        ...(s?.image_url ? [{ property: "og:image", content: s.image_url }] : []),
+      ],
+      links: [{ rel: "canonical", href: `/services/${params.slug}` }],
+      scripts: s ? [{
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: s.title,
+          description: s.short_description ?? s.description,
+          provider: { "@type": "LocalBusiness", name: "Пермь Асфальт 59", areaServed: "Пермь и Пермский край" },
+          offers: { "@type": "Offer", price: s.price_from, priceCurrency: "RUB" },
+        }),
+      }] : [],
+    };
+  },
   component: ServicePage,
 });
 
