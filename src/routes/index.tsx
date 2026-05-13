@@ -49,7 +49,17 @@ function HomePage() {
               initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
               className="mt-6 text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95]"
             >
-              {hero.title ?? "Пермь Асфальт"} <span className="text-gradient-gold">59</span>
+              {(() => {
+                const raw = (hero.title ?? "Пермь Асфальт 59").trim();
+                const m = raw.match(/^(.*?)(\s*59)\s*$/);
+                const base = m ? m[1].trim() : raw;
+                return (
+                  <>
+                    <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">{base}</span>{" "}
+                    <span className="text-gradient-gold drop-shadow-[0_0_30px_oklch(0.78_0.16_70/0.4)]">59</span>
+                  </>
+                );
+              })()}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
