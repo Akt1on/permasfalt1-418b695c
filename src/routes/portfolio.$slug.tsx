@@ -5,6 +5,24 @@ import { fetchProject, fetchProjectPhotos } from "@/lib/site-data";
 import { CallbackForm } from "@/components/site/CallbackForm";
 
 export const Route = createFileRoute("/portfolio/$slug")({
+  loader: async ({ params }) => ({ project: await fetchProject(params.slug) }),
+  head: ({ loaderData, params }) => {
+    const p = loaderData?.project;
+    const title = p ? `${p.title} — портфолио | Пермь Асфальт 59` : "Объект — Пермь Асфальт 59";
+    const description = p?.description?.slice(0, 160) ?? `Реализованный проект в ${p?.location ?? "Перми"}: ${p?.title ?? ""}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: `/portfolio/${params.slug}` },
+        ...(p?.cover_image ? [{ property: "og:image", content: p.cover_image }] : []),
+      ],
+      links: [{ rel: "canonical", href: `/portfolio/${params.slug}` }],
+    };
+  },
   component: ProjectPage,
 });
 
