@@ -81,7 +81,7 @@ function HomePage() {
                 return (
                   <>
                     <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">{base}</span>{" "}
-                    <span className="text-gradient-gold drop-shadow-[0_0_30px_oklch(0.78_0.16_70/0.4)]">59</span>
+                    <span className="text-gradient-gold text-glow-gold">59</span>
                   </>
                 );
               })()}
