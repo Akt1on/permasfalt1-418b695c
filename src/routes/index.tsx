@@ -59,6 +59,8 @@ function HomePage() {
           <img src={heroImg} alt="Асфальтирование" className="h-full w-full object-cover" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
           <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
+          <div className="absolute inset-0 grid-pattern" />
+          <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[120px] animate-glow-pulse" />
         </div>
 
         <div className="container-x relative z-10 pt-32 pb-20 grid lg:grid-cols-12 gap-10 items-center">
