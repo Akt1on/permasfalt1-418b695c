@@ -34,11 +34,11 @@ function AdminProjects() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-display text-3xl font-bold">Портфолио</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold">Портфолио</h1>
         <button onClick={() => setEdit({ is_active: true, sort_order: projects.length })} className="btn-gold rounded-lg px-4 py-2 text-sm font-semibold flex items-center gap-2"><Plus className="h-4 w-4" /> Добавить</button>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
         {projects.map((p) => (
           <div key={p.id} className="glass rounded-2xl overflow-hidden">
             {p.cover_image && <img src={p.cover_image} alt="" className="aspect-video w-full object-cover" />}
@@ -114,8 +114,8 @@ function PhotosModal({ projectId, onClose }: { projectId: string; onClose: () =>
 
 function Modal({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur grid place-items-center p-4" onClick={onClose}>
-      <div className="glass rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>{children}</div>
+    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur grid place-items-center p-2 sm:p-4" onClick={onClose}>
+      <div className="glass rounded-2xl p-4 sm:p-6 max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>
   );
 }

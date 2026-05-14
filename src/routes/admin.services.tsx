@@ -33,14 +33,14 @@ function AdminServices() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-display text-3xl font-bold">Услуги</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold">Услуги</h1>
         <button onClick={() => setEdit({ is_active: true, price_unit: "м²", sort_order: services.length })} className="btn-gold rounded-lg px-4 py-2 text-sm font-semibold flex items-center gap-2">
           <Plus className="h-4 w-4" /> Добавить
         </button>
       </div>
-      <div className="glass rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="glass rounded-2xl overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-surface-2 text-left text-xs uppercase tracking-widest text-muted-foreground">
             <tr><th className="p-4">Название</th><th className="p-4">Цена</th><th className="p-4">Активна</th><th className="p-4 w-32"></th></tr>
           </thead>
@@ -61,8 +61,8 @@ function AdminServices() {
       </div>
 
       {edit && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur grid place-items-center p-4 z-50" onClick={() => setEdit(null)}>
-          <div className="glass rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-background/80 backdrop-blur grid place-items-center p-2 sm:p-4 z-50" onClick={() => setEdit(null)}>
+          <div className="glass rounded-2xl p-4 sm:p-6 max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-display text-2xl font-bold mb-5">{edit.id ? "Редактировать" : "Новая услуга"}</h2>
             <div className="grid gap-3">
               <Field label="Название"><Input value={edit.title ?? ""} onChange={(v) => setEdit({ ...edit, title: v })} /></Field>
