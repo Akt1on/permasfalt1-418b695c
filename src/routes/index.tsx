@@ -6,6 +6,7 @@ import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote, 
 import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
+import { Quiz } from "@/components/site/Quiz";
 import { DynIcon } from "@/components/site/icon";
 import heroImg from "@/assets/hero-asphalt.jpg";
 
@@ -177,8 +178,8 @@ function HomePage() {
         </div>
       </Section>
 
-      {/* CALCULATOR */}
-      <Calculator />
+      {/* QUIZ */}
+      <Quiz />
 
       {/* WHY US */}
       <Section
