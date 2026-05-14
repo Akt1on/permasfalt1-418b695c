@@ -8,15 +8,17 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const [{ data: services }, { data: projects }] = await Promise.all([
+        const [{ data: services }, { data: projects }, { data: posts }] = await Promise.all([
           supabase.from("services").select("slug,updated_at").eq("is_active", true),
           supabase.from("projects").select("slug,updated_at").eq("is_active", true),
+          (supabase as any).from("posts").select("slug,updated_at").eq("is_published", true),
         ]);
 
         const staticEntries = [
           { path: "/", priority: "1.0", changefreq: "weekly" },
           { path: "/services", priority: "0.9", changefreq: "weekly" },
           { path: "/portfolio", priority: "0.8", changefreq: "weekly" },
+          { path: "/blog", priority: "0.8", changefreq: "weekly" },
           { path: "/about", priority: "0.6", changefreq: "monthly" },
           { path: "/contacts", priority: "0.7", changefreq: "monthly" },
         ];
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const dynamicEntries = [
           ...(services ?? []).map((s: any) => ({ path: `/services/${s.slug}`, lastmod: s.updated_at, priority: "0.8", changefreq: "monthly" })),
           ...(projects ?? []).map((p: any) => ({ path: `/portfolio/${p.slug}`, lastmod: p.updated_at, priority: "0.7", changefreq: "monthly" })),
+          ...(posts ?? []).map((p: any) => ({ path: `/blog/${p.slug}`, lastmod: p.updated_at, priority: "0.7", changefreq: "monthly" })),
         ];
 
         const urls = [...staticEntries, ...dynamicEntries].map((e: any) =>
