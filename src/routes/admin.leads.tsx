@@ -25,9 +25,9 @@ function AdminLeads() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl font-bold mb-6">Заявки</h1>
-      <div className="glass rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
+      <h1 className="font-display text-2xl sm:text-3xl font-bold mb-6">Заявки</h1>
+      <div className="glass rounded-2xl overflow-x-auto">
+        <table className="w-full text-sm min-w-[720px]">
           <thead className="bg-surface-2 text-left text-xs uppercase tracking-widest text-muted-foreground">
             <tr><th className="p-4">Дата</th><th className="p-4">Имя</th><th className="p-4">Телефон</th><th className="p-4">Сообщение</th><th className="p-4">Источник</th><th className="p-4">Статус</th><th></th></tr>
           </thead>
