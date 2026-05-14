@@ -20,6 +20,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
@@ -81,6 +82,11 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => PortfolioRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -112,7 +118,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contacts': typeof ContactsRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/services': typeof ServicesRouteWithChildren
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
 }
@@ -130,7 +137,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contacts': typeof ContactsRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/services': typeof ServicesRouteWithChildren
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
 }
@@ -149,7 +157,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contacts': typeof ContactsRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/services': typeof ServicesRouteWithChildren
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
 }
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/portfolio/$slug'
     | '/services/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/portfolio/$slug'
     | '/services/$slug'
   id:
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/portfolio/$slug'
     | '/services/$slug'
   fileRoutesById: FileRoutesById
@@ -224,7 +236,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactsRoute: typeof ContactsRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
   ServicesRoute: typeof ServicesRouteWithChildren
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioSlugRouteImport
       parentRoute: typeof PortfolioRoute
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -366,6 +385,16 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 interface PortfolioRouteChildren {
   PortfolioSlugRoute: typeof PortfolioSlugRoute
 }
@@ -395,7 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactsRoute: ContactsRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
   ServicesRoute: ServicesRouteWithChildren,
