@@ -6,6 +6,7 @@ import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote, 
 import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
+import { Quiz } from "@/components/site/Quiz";
 import { DynIcon } from "@/components/site/icon";
 import heroImg from "@/assets/hero-asphalt.jpg";
 
@@ -177,8 +178,8 @@ function HomePage() {
         </div>
       </Section>
 
-      {/* CALCULATOR */}
-      <Calculator />
+      {/* QUIZ */}
+      <Quiz />
 
       {/* WHY US */}
       <Section
@@ -366,45 +367,5 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         <div className="px-6 pb-6 -mt-1 text-muted-foreground leading-relaxed animate-float-up">{a}</div>
       )}
     </div>
-  );
-}
-
-function Calculator() {
-  const [area, setArea] = useState(100);
-  const price = area * 1500;
-  return (
-    <Section eyebrow="Калькулятор" title={<>Прикиньте стоимость <span className="text-gradient-gold">асфальтирования</span></>}>
-      <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-        <div className="glass rounded-2xl p-8">
-          <label className="text-xs uppercase tracking-widest text-muted-foreground">Площадь, м²</label>
-          <div className="mt-3 flex items-baseline gap-3">
-            <input type="number" min={10} value={area} onChange={(e) => setArea(Math.max(10, Number(e.target.value) || 10))}
-              className="bg-transparent border-b-2 border-primary text-5xl font-display font-bold w-40 focus:outline-none" />
-            <span className="text-muted-foreground">м²</span>
-          </div>
-          <input type="range" min={10} max={2000} step={10} value={area} onChange={(e) => setArea(Number(e.target.value))}
-            className="mt-6 w-full accent-primary" />
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            <div className="bg-surface-2 rounded-xl p-5">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Цена за м²</div>
-              <div className="font-display text-2xl font-bold mt-1">от 1 500 ₽</div>
-            </div>
-            <div className="bg-surface-2 rounded-xl p-5">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Итого</div>
-              <div className="font-display text-2xl font-bold text-primary mt-1">{price.toLocaleString("ru-RU")} ₽</div>
-            </div>
-          </div>
-          <p className="mt-5 text-xs text-muted-foreground leading-relaxed">
-            * Включено: подготовка основания (снятие грунта, геотекстиль, щебень, утрамбовка), укладка асфальта.
-            Финальная стоимость зависит от условий объекта.
-          </p>
-        </div>
-        <div className="glass rounded-2xl p-8 flex flex-col">
-          <h3 className="font-display text-2xl font-bold">Получите точный расчёт</h3>
-          <p className="text-muted-foreground mt-2 mb-6">Оставьте телефон — пришлём смету в течение 1 рабочего дня.</p>
-          <div className="flex-1 flex items-end"><div className="w-full"><CallbackForm source="calculator" /></div></div>
-        </div>
-      </div>
-    </Section>
   );
 }

@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Wrench, FolderKanban, Inbox, Settings, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Wrench, FolderKanban, Inbox, Settings, LogOut, Menu, X, Newspaper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ const items = [
   { to: "/admin", label: "Обзор", icon: LayoutDashboard },
   { to: "/admin/services", label: "Услуги", icon: Wrench },
   { to: "/admin/projects", label: "Портфолио", icon: FolderKanban },
+  { to: "/admin/posts", label: "Блог", icon: Newspaper },
   { to: "/admin/leads", label: "Заявки", icon: Inbox },
   { to: "/admin/settings", label: "Настройки", icon: Settings },
 ];

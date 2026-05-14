@@ -61,3 +61,22 @@ export async function fetchReviews(): Promise<Review[]> {
   const { data } = await (supabase as any).from("reviews").select("*").eq("is_active", true).order("sort_order");
   return (data ?? []) as Review[];
 }
+
+export type Post = {
+  id: string; slug: string; title: string; excerpt: string | null;
+  content: string | null; cover_image: string | null; keywords: string | null;
+  read_minutes: number; is_published: boolean; published_at: string | null;
+  sort_order: number; created_at: string; updated_at: string;
+};
+export async function fetchPosts(): Promise<Post[]> {
+  const { data } = await (supabase as any).from("posts").select("*").eq("is_published", true).order("published_at", { ascending: false });
+  return (data ?? []) as Post[];
+}
+export async function fetchAllPosts(): Promise<Post[]> {
+  const { data } = await (supabase as any).from("posts").select("*").order("created_at", { ascending: false });
+  return (data ?? []) as Post[];
+}
+export async function fetchPost(slug: string): Promise<Post | null> {
+  const { data } = await (supabase as any).from("posts").select("*").eq("slug", slug).maybeSingle();
+  return (data as Post) ?? null;
+}
