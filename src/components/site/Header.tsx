@@ -8,6 +8,7 @@ const nav = [
   { to: "/", label: "Главная" },
   { to: "/services", label: "Услуги" },
   { to: "/portfolio", label: "Портфолио" },
+  { to: "/blog", label: "Блог" },
   { to: "/about", label: "О нас" },
   { to: "/contacts", label: "Контакты" },
 ];
