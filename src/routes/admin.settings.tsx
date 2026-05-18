@@ -33,7 +33,7 @@ function AdminSettings() {
       <h1 className="font-display text-2xl sm:text-3xl font-bold mb-6">Настройки сайта</h1>
       <div className="space-y-6">
         <Card title="Контакты" onSave={() => save("contacts", contacts)}>
-          {(["phone","phone2","email","address","work_hours","whatsapp","telegram"] as const).map((k) => (
+          {(["phone","phone2","email","address","work_hours","whatsapp","telegram","max"] as const).map((k) => (
             <Field key={k} label={k}><Input value={contacts[k] ?? ""} onChange={(v) => setContacts({ ...contacts, [k]: v })} /></Field>
           ))}
         </Card>
