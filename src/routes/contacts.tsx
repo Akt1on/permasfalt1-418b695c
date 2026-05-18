@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, MessagesSquare } from "lucide-react";
 import { fetchSettings } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
@@ -60,6 +60,15 @@ function ContactsPage() {
               <div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">WhatsApp</div>
                 <div className="font-display text-xl font-bold mt-1">Написать в WhatsApp</div>
+              </div>
+            </a>
+          )}
+          {c.max && (
+            <a href={c.max} target="_blank" rel="noreferrer" className="flex items-start gap-4 glass rounded-2xl p-6 hover:border-primary/40 transition">
+              <div className="h-11 w-11 rounded-xl btn-gold grid place-items-center shrink-0"><MessagesSquare className="h-5 w-5" /></div>
+              <div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">Мессенджер Max</div>
+                <div className="font-display text-xl font-bold mt-1">Написать в Max</div>
               </div>
             </a>
           )}

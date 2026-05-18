@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Calculator as CalcIcon, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Calculator as CalcIcon } from "lucide-react";
 import { IMaskInput } from "react-imask";
 import { Section } from "@/components/site/Section";
 import { supabase } from "@/integrations/supabase/client";
+import { notifyLead } from "@/lib/notifications.functions";
 import { toast } from "sonner";
 
 type Answer = { type: string; coverage: string; area: number; timing: string };
@@ -55,6 +56,7 @@ export function Quiz() {
     });
     setSubmitting(false);
     if (error) { toast.error("Не удалось отправить. Попробуйте позже."); return; }
+    notifyLead({ data: { name: name || null, phone, message: summary, source: "quiz" } }).catch(() => {});
     setDone(true);
     toast.success("Заявка принята!");
   };
@@ -196,9 +198,7 @@ export function Quiz() {
                   <Step title="Куда отправить расчёт?">
                     <div className="grid gap-4 max-w-md mx-auto">
                       <div className="text-center mb-2">
-                        <div className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-center gap-1.5">
-                          <Sparkles className="h-3 w-3" /> Ваша предварительная стоимость
-                        </div>
+                        <div className="text-xs uppercase tracking-widest text-muted-foreground">Ваша предварительная стоимость</div>
                         <div className="font-display text-4xl sm:text-5xl font-bold text-gradient-gold mt-2">
                           {price.toLocaleString("ru-RU")} ₽
                         </div>

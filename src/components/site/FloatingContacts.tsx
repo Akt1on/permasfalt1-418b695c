@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Phone, MessageCircle, Send, X } from "lucide-react";
+import { Phone, MessageCircle, Send, X, MessagesSquare } from "lucide-react";
 import { fetchSettings } from "@/lib/site-data";
 
 export function FloatingContacts() {
@@ -19,6 +19,7 @@ export function FloatingContacts() {
   const phone = contacts.phone ?? "+7 (342) 277-77-10";
   const whatsapp = (contacts.whatsapp ?? "").replace(/[^\d]/g, "");
   const telegram = (contacts.telegram ?? "").replace(/^@/, "");
+  const max = contacts.max ?? "";
 
   if (!visible) return null;
 
@@ -34,6 +35,12 @@ export function FloatingContacts() {
       label: "Telegram",
       icon: Send,
       bg: "bg-[#229ED9]",
+    },
+    max && {
+      href: max,
+      label: "Max",
+      icon: MessagesSquare,
+      bg: "bg-[#0077FF]",
     },
     {
       href: `tel:${phone.replace(/[^+\d]/g, "")}`,
