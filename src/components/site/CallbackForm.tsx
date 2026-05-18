@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { notifyLead } from "@/lib/notifications.functions";
 import { toast } from "sonner";
 import { IMaskInput } from "react-imask";
 
@@ -16,6 +17,7 @@ export function CallbackForm({ source = "website", compact = false }: { source?:
     const { error } = await supabase.from("leads").insert({ name, phone, message, source });
     setLoading(false);
     if (error) { toast.error("Не удалось отправить. Попробуйте позже."); return; }
+    notifyLead({ data: { name: name || null, phone, message: message || null, source } }).catch(() => {});
     toast.success("Заявка принята! Мы перезвоним в ближайшее время.");
     setName(""); setPhone(""); setMessage("");
   };
