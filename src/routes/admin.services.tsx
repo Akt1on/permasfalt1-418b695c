@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { fetchAllServices, type Service } from "@/lib/site-data";
+import { fetchAllServices, fetchPricing, type Service } from "@/lib/site-data";
 import { ImageUpload } from "@/components/admin/ImageUpload";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, X } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/services")({ component: AdminServices });
@@ -76,6 +76,7 @@ function AdminServices() {
               </div>
               <Field label="Изображение"><ImageUpload value={edit.image_url} onChange={(url) => setEdit({ ...edit, image_url: url })} /></Field>
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={edit.is_active ?? true} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} /> Активна</label>
+              {edit.id && <PricingEditor serviceId={edit.id} />}
             </div>
             <div className="mt-6 flex gap-3 justify-end">
               <button onClick={() => setEdit(null)} className="px-5 py-2.5 rounded-lg hover:bg-surface-2">Отмена</button>
@@ -84,6 +85,52 @@ function AdminServices() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function PricingEditor({ serviceId }: { serviceId: string }) {
+  const qc = useQueryClient();
+  const { data: items = [] } = useQuery({
+    queryKey: ["pricing", serviceId],
+    queryFn: () => fetchPricing(serviceId),
+  });
+  const [name, setName] = useState("");
+  const [unit, setUnit] = useState("м²");
+  const [price, setPrice] = useState("");
+
+  const add = async () => {
+    if (!name || !price) { toast.error("Введите название и цену"); return; }
+    const { error } = await supabase.from("pricing_items").insert({
+      service_id: serviceId, name, unit, price: Number(price), sort_order: items.length,
+    });
+    if (error) { toast.error(error.message); return; }
+    setName(""); setPrice("");
+    qc.invalidateQueries({ queryKey: ["pricing", serviceId] });
+  };
+  const del = async (id: string) => {
+    await supabase.from("pricing_items").delete().eq("id", id);
+    qc.invalidateQueries({ queryKey: ["pricing", serviceId] });
+  };
+
+  return (
+    <div className="mt-4 pt-4 border-t border-border">
+      <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Прайс-лист (детально)</div>
+      <div className="space-y-2 mb-3">
+        {items.map((it: any) => (
+          <div key={it.id} className="flex items-center gap-2 bg-surface-2/50 rounded-lg px-3 py-2 text-sm">
+            <span className="flex-1">{it.name}</span>
+            <span className="text-primary font-semibold">{Number(it.price).toLocaleString("ru-RU")} ₽ / {it.unit}</span>
+            <button onClick={() => del(it.id)} className="p-1 text-destructive hover:bg-surface-2 rounded"><X className="h-3.5 w-3.5" /></button>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-12 gap-2">
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Позиция" className="col-span-6 bg-input border border-border rounded-lg px-3 py-2 text-sm focus:border-primary focus:outline-none" />
+        <input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="ед." className="col-span-2 bg-input border border-border rounded-lg px-3 py-2 text-sm focus:border-primary focus:outline-none" />
+        <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Цена" type="number" className="col-span-2 bg-input border border-border rounded-lg px-3 py-2 text-sm focus:border-primary focus:outline-none" />
+        <button onClick={add} className="col-span-2 btn-gold rounded-lg text-sm font-semibold flex items-center justify-center gap-1"><Plus className="h-4 w-4" /></button>
+      </div>
     </div>
   );
 }
