@@ -23,6 +23,7 @@ import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminReviewsRouteImport } from './routes/admin.reviews'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as AdminPostsRouteImport } from './routes/admin.posts'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
@@ -97,6 +98,11 @@ const AdminServicesRoute = AdminServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminReviewsRoute = AdminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminProjectsRoute = AdminProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/posts'
     | '/admin/projects'
+    | '/admin/reviews'
     | '/admin/services'
     | '/admin/settings'
     | '/blog/$slug'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/posts'
     | '/admin/projects'
+    | '/admin/reviews'
     | '/admin/services'
     | '/admin/settings'
     | '/blog/$slug'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/posts'
     | '/admin/projects'
+    | '/admin/reviews'
     | '/admin/services'
     | '/admin/settings'
     | '/blog/$slug'
@@ -343,6 +355,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminServicesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/reviews': {
+      id: '/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/projects': {
       id: '/admin/projects'
       path: '/projects'
@@ -371,6 +390,7 @@ interface AdminRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminPostsRoute: typeof AdminPostsRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminReviewsRoute: typeof AdminReviewsRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
 }
@@ -379,6 +399,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminPostsRoute: AdminPostsRoute,
   AdminProjectsRoute: AdminProjectsRoute,
+  AdminReviewsRoute: AdminReviewsRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
 }
@@ -433,3 +454,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
