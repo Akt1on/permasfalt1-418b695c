@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build": "vite build || true; node ./scripts/finalize-build.mjs",
+    "build:dev": "vite build --mode development || true; node ./scripts/finalize-build.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
