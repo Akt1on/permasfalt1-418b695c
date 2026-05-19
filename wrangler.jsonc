@@ -6,5 +6,8 @@
   "main": "dist/server/index.js",
   "assets": {
     "directory": "dist/client"
+  },
+  "vite": {
+    "viteEnvironment": { "name": "server" }
   }
 }
