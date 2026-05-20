@@ -10,7 +10,11 @@ export const Route = createFileRoute("/portfolio")({
     meta: [
       { title: "Портфолио — Пермь Асфальт 59" },
       { name: "description", content: "Выполненные объекты: асфальтирование, укладка плитки, демонтаж, земляные работы." },
+      { property: "og:title", content: "Портфолио — Пермь Асфальт 59" },
+      { property: "og:description", content: "Фото выполненных объектов по асфальтированию и благоустройству в Перми и Пермском крае." },
+      { property: "og:url", content: "https://permasfalt1.lovable.app/portfolio" },
     ],
+    links: [{ rel: "canonical", href: "https://permasfalt1.lovable.app/portfolio" }],
   }),
   component: PortfolioLayout,
 });
