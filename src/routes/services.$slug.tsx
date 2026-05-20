@@ -5,6 +5,8 @@ import { fetchService, fetchPricing, fetchSettings } from "@/lib/site-data";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { DynIcon } from "@/components/site/icon";
 
+const BASE = "https://permasfalt59.ru";
+
 export const Route = createFileRoute("/services/$slug")({
   loader: async ({ params }) => {
     const service = await fetchService(params.slug);
@@ -14,6 +16,7 @@ export const Route = createFileRoute("/services/$slug")({
     const s = loaderData?.service;
     const title = s ? `${s.title} в Перми — цена от ${Number(s.price_from).toLocaleString("ru-RU")} ₽/${s.price_unit} | Пермь Асфальт 59` : "Услуга — Пермь Асфальт 59";
     const description = s?.short_description ?? s?.description?.slice(0, 160) ?? "Профессиональные услуги по благоустройству в Перми и Пермском крае. Гарантия 3 года, бесплатный выезд.";
+    const url = `${BASE}/services/${params.slug}`;
     return {
       meta: [
         { title },
@@ -21,10 +24,10 @@ export const Route = createFileRoute("/services/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `/services/${params.slug}` },
+        { property: "og:url", content: url },
         ...(s?.image_url ? [{ property: "og:image", content: s.image_url }] : []),
       ],
-      links: [{ rel: "canonical", href: `/services/${params.slug}` }],
+      links: [{ rel: "canonical", href: url }],
       scripts: s ? [{
         type: "application/ld+json",
         children: JSON.stringify({
