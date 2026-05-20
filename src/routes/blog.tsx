@@ -12,10 +12,10 @@ export const Route = createFileRoute("/blog")({
       { name: "description", content: "Статьи и советы об асфальтировании, благоустройстве, укладке плитки и спецтехнике в Перми и Пермском крае." },
       { property: "og:title", content: "Блог — Пермь Асфальт 59" },
       { property: "og:description", content: "Полезные статьи об асфальтировании и благоустройстве." },
-      { property: "og:url", content: "https://permasfalt1.lovable.app/blog" },
+      { property: "og:url", content: "https://permasfalt59.ru/blog" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://permasfalt1.lovable.app/blog" }],
+    links: [{ rel: "canonical", href: "https://permasfalt59.ru/blog" }],
   }),
   component: BlogPage,
 });

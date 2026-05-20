@@ -6,7 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { FloatingContacts } from "@/components/site/FloatingContacts";
 import appCss from "../styles.css?url";
 
-const SITE_URL = "https://permasfalt1.lovable.app";
+const SITE_URL = "https://permasfalt59.ru";
 const SITE_TITLE = "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми";
 const SITE_DESCRIPTION = "Асфальтирование, укладка плитки, демонтаж, спецтехника и благоустройство в Перми и Пермском крае. Гарантия 3 года.";
 const OG_IMAGE = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/86436dad-abae-4682-9964-504f274a9b76/id-preview-3224c9f9--608fd283-cf0f-4131-9730-eb2ddbd48d07.lovable.app-1778667243290.png";
