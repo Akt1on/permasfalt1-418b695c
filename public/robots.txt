@@ -4,3 +4,4 @@ Disallow: /admin
 Disallow: /auth
 
 Sitemap: https://permasfalt59.ru/sitemap.xml
+Sitemap: https://permasfalt1.lovable.app/sitemap.xml
