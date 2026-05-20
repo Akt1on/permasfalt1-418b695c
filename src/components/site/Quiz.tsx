@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Check, Calculator as CalcIcon } from "lucide-rea
 import { IMaskInput } from "react-imask";
 import { Section } from "@/components/site/Section";
 import { supabase } from "@/integrations/supabase/client";
-import { notifyLead } from "@/lib/notifications.functions";
+import { notifyLead } from "@/lib/notify-lead";
 import { toast } from "sonner";
 
 type Answer = { type: string; coverage: string; area: number; timing: string };
@@ -56,7 +56,7 @@ export function Quiz() {
     });
     setSubmitting(false);
     if (error) { toast.error("Не удалось отправить. Попробуйте позже."); return; }
-    notifyLead({ data: { name: name || null, phone, message: summary, source: "quiz" } }).catch(() => {});
+    notifyLead({ name: name || null, phone, message: summary, source: "quiz" }).catch(() => {});
     setDone(true);
     toast.success("Заявка принята!");
   };
