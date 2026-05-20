@@ -9,33 +9,39 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_evt, sess) => {
+    let alive = true;
+
+    const applySession = async (sess: Session | null) => {
+      if (!alive) return;
+      setLoading(true);
       setSession(sess);
       setUser(sess?.user ?? null);
-      if (sess?.user) {
-        setTimeout(async () => {
-          const { data } = await supabase
-            .from("user_roles")
-            .select("role")
-            .eq("user_id", sess.user.id)
-            .eq("role", "admin")
-            .maybeSingle();
-          setIsAdmin(!!data);
-        }, 0);
-      } else {
+
+      if (!sess?.user) {
         setIsAdmin(false);
+        setLoading(false);
+        return;
       }
+
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", sess.user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+
+      if (!alive) return;
+      setIsAdmin(!error && !!data);
+      setLoading(false);
+    };
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_evt, sess) => {
+      setTimeout(() => { void applySession(sess); }, 0);
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        supabase.from("user_roles").select("role").eq("user_id", session.user.id).eq("role", "admin").maybeSingle()
-          .then(({ data }) => setIsAdmin(!!data));
-      }
-      setLoading(false);
+      void applySession(session);
     });
-    return () => sub.subscription.unsubscribe();
+    return () => { alive = false; sub.subscription.unsubscribe(); };
   }, []);
 
   return { session, user, isAdmin, loading };

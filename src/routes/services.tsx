@@ -11,7 +11,11 @@ export const Route = createFileRoute("/services")({
     meta: [
       { title: "Услуги — Пермь Асфальт 59" },
       { name: "description", content: "Полный список услуг: асфальтирование, укладка плитки, демонтаж, земляные работы, аренда спецтехники, доставка нерудных материалов." },
+      { property: "og:title", content: "Услуги — Пермь Асфальт 59" },
+      { property: "og:description", content: "Асфальтирование, тротуарная плитка, демонтаж, земляные работы и спецтехника в Перми." },
+      { property: "og:url", content: "https://permasfalt59.ru/services" },
     ],
+    links: [{ rel: "canonical", href: "https://permasfalt59.ru/services" }],
   }),
   component: ServicesLayout,
 });

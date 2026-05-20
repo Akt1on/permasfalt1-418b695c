@@ -6,6 +6,11 @@ import { Footer } from "@/components/site/Footer";
 import { FloatingContacts } from "@/components/site/FloatingContacts";
 import appCss from "../styles.css?url";
 
+const SITE_URL = "https://permasfalt59.ru";
+const SITE_TITLE = "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми";
+const SITE_DESCRIPTION = "Асфальтирование, укладка плитки, демонтаж, спецтехника и благоустройство в Перми и Пермском крае. Гарантия 3 года.";
+const OG_IMAGE = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/86436dad-abae-4682-9964-504f274a9b76/id-preview-3224c9f9--608fd283-cf0f-4131-9730-eb2ddbd48d07.lovable.app-1778667243290.png";
+
 function NotFoundComponent() {
   return (
     <div className="min-h-screen grid place-items-center bg-background px-4">
@@ -36,18 +41,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми" },
-      { name: "description", content: "Асфальтирование, укладка плитки, демонтаж, спецтехника и благоустройство в Перми и Пермском крае. Гарантия 3 года." },
-      { property: "og:title", content: "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми" },
-      { property: "og:description", content: "Асфальтирование, укладка плитки, демонтаж, спецтехника и благоустройство в Перми и Пермском крае. Гарантия 3 года." },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Пермь Асфальт 59" },
       { property: "og:locale", content: "ru_RU" },
+      { property: "og:url", content: SITE_URL },
       { name: "theme-color", content: "#1a1814" },
-      { name: "twitter:title", content: "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми" },
-      { name: "twitter:description", content: "Асфальтирование, укладка плитки, демонтаж, спецтехника и благоустройство в Перми и Пермском крае. Гарантия 3 года." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/86436dad-abae-4682-9964-504f274a9b76/id-preview-3224c9f9--608fd283-cf0f-4131-9730-eb2ddbd48d07.lovable.app-1778667243290.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/86436dad-abae-4682-9964-504f274a9b76/id-preview-3224c9f9--608fd283-cf0f-4131-9730-eb2ddbd48d07.lovable.app-1778667243290.png" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -57,9 +63,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         name: "Пермь Асфальт 59",
-        image: "/og-image.jpg",
-        "@id": "https://permasfalt59.ru",
-        url: "https://permasfalt59.ru",
+        image: OG_IMAGE,
+        "@id": SITE_URL,
+        url: SITE_URL,
         telephone: "+7 (342) 277-77-10",
         priceRange: "₽₽",
         address: {
@@ -75,7 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
           opens: "00:00", closes: "23:59",
         },
-        sameAs: ["https://t.me/permasfalt59"],
+        sameAs: ["https://t.me/permasfalt59", "https://max.ru/u/f9LHodD0cOJAfKaId22-OuTE63T7HkTjiqXvvLJyteFC19eo4fV8WJ0kSjk"],
       }),
     }],
   }),

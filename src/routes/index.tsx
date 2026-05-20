@@ -15,7 +15,11 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Пермь Асфальт 59 — асфальтирование, плитка, благоустройство в Перми" },
       { name: "description", content: "Асфальтирование территорий, укладка тротуарной плитки, демонтаж, аренда спецтехники в Перми. Гарантия 3 года, выезд бесплатно." },
+      { property: "og:title", content: "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми" },
+      { property: "og:description", content: "Асфальтирование, плитка, демонтаж и спецтехника в Перми. Бесплатный замер, договор и гарантия 3 года." },
+      { property: "og:url", content: "https://permasfalt59.ru/" },
     ],
+    links: [{ rel: "canonical", href: "https://permasfalt59.ru/" }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

@@ -1,8 +1,6 @@
 import { createFileRoute, Link, useParams, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
-import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { fetchPost } from "@/lib/site-data";
 
@@ -49,13 +47,9 @@ export const Route = createFileRoute("/blog/$slug")({
     };
   },
   notFoundComponent: () => (
-    <>
-      <Header />
-      <div className="container-x py-32 text-center">
-        Статья не найдена. <Link to="/blog" className="text-primary">В блог</Link>
-      </div>
-      <Footer />
-    </>
+    <div className="container-x py-32 text-center">
+      Статья не найдена. <Link to="/blog" className="text-primary">В блог</Link>
+    </div>
   ),
   errorComponent: ({ error }) => (
     <div className="container-x py-32 text-center text-muted-foreground">{error.message}</div>
@@ -70,9 +64,7 @@ function PostPage() {
   const p = post ?? initial;
 
   return (
-    <>
-      <Header />
-      <main className="pt-24">
+    <main>
         <article className="container-x py-12 max-w-3xl">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6">
             <ArrowLeft className="h-4 w-4" /> К списку статей
@@ -99,8 +91,6 @@ function PostPage() {
           </div>
         </article>
       </main>
-      <Footer />
-    </>
   );
 }
 
