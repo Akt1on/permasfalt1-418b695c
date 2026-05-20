@@ -2,8 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
 import { fetchPosts } from "@/lib/site-data";
 
@@ -14,10 +12,10 @@ export const Route = createFileRoute("/blog")({
       { name: "description", content: "Статьи и советы об асфальтировании, благоустройстве, укладке плитки и спецтехнике в Перми и Пермском крае." },
       { property: "og:title", content: "Блог — Пермь Асфальт 59" },
       { property: "og:description", content: "Полезные статьи об асфальтировании и благоустройстве." },
-      { property: "og:url", content: "https://permasfalt59.ru/blog" },
+      { property: "og:url", content: "https://permasfalt1.lovable.app/blog" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://permasfalt59.ru/blog" }],
+    links: [{ rel: "canonical", href: "https://permasfalt1.lovable.app/blog" }],
   }),
   component: BlogPage,
 });
@@ -26,9 +24,7 @@ function BlogPage() {
   const { data: posts = [], isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts });
 
   return (
-    <>
-      <Header />
-      <main className="pt-24">
+    <main>
         <Section
           eyebrow="Журнал"
           title={<>Полезное о <span className="text-gradient-gold">благоустройстве</span></>}
@@ -70,7 +66,5 @@ function BlogPage() {
           )}
         </Section>
       </main>
-      <Footer />
-    </>
   );
 }
