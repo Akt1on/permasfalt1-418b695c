@@ -1,8 +1,5 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, cloudflare (build-only),
-//     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
-//     error logger plugins, and sandbox detection (port/host/strictPort).
+// @lovable.dev/vite-tanstack-config already includes the core Vite/TanStack plugins.
+// Do not add duplicate React, Router, Tailwind or path-alias plugins manually.
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import fs from "node:fs";
@@ -27,9 +24,8 @@ export default defineConfig({
     },
     plugins: [
       {
-        // Cloudflare plugin emits dist/server/index.js, but TanStack's SPA
-        // prerender preview server imports dist/server/server.js. Mirror the
-        // file so prerender can boot.
+        // TanStack's SPA prerender may expect server.js while the build emits index.js.
+        // Mirror the entry so prerender can boot reliably on static Vercel builds.
         name: "lovable-mirror-ssr-entry",
         apply: "build",
         closeBundle() {
