@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HelmetProvider } from "react-helmet-async";
 import { Outlet, createRootRouteWithContext, useRouter, useRouterState, HeadContent, Scripts, Link } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FloatingContacts } from "@/components/site/FloatingContacts";
+import { PageTransition } from "@/components/site/PageTransition";
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://permasfalt59.ru";
@@ -95,7 +97,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" className="dark">
       <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
+      <body className="min-h-screen bg-background text-foreground">{children}<Scripts /></body>
     </html>
   );
 }
@@ -105,14 +107,18 @@ function RootComponent() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = path.startsWith("/admin");
   return (
-    <QueryClientProvider client={queryClient}>
-      {!isAdmin && <Header />}
-      <main className={!isAdmin ? "pt-24" : ""}>
-        <Outlet />
-      </main>
-      {!isAdmin && <Footer />}
-      {!isAdmin && <FloatingContacts />}
-      <Toaster theme="dark" position="top-right" />
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        {!isAdmin && <Header />}
+        <main className={!isAdmin ? "pt-24" : ""}>
+          <PageTransition path={path}>
+            <Outlet />
+          </PageTransition>
+        </main>
+        {!isAdmin && <Footer />}
+        {!isAdmin && <FloatingContacts />}
+        <Toaster theme="dark" position="top-right" />
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }

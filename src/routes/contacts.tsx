@@ -5,8 +5,25 @@ import { fetchSettings } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
 
+const CONTACTS_URL = "https://permasfalt59.ru/contacts";
+const CONTACTS_TITLE = "Контакты — Пермь Асфальт 59";
+const CONTACTS_DESCRIPTION = "Свяжитесь с Пермь Асфальт 59: телефон, email, адрес, круглосуточная поддержка и бесплатный выезд инженера.";
+
 export const Route = createFileRoute("/contacts")({
-  head: () => ({ meta: [{ title: "Контакты — Пермь Асфальт 59" }, { name: "description", content: "Адрес, телефон, e-mail компании Пермь Асфальт 59." }] }),
+  head: () => ({
+    meta: [
+      { title: CONTACTS_TITLE },
+      { name: "description", content: CONTACTS_DESCRIPTION },
+      { property: "og:title", content: CONTACTS_TITLE },
+      { property: "og:description", content: CONTACTS_DESCRIPTION },
+      { property: "og:url", content: CONTACTS_URL },
+      { property: "og:site_name", content: "Пермь Асфальт 59" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: CONTACTS_TITLE },
+      { name: "twitter:description", content: CONTACTS_DESCRIPTION },
+    ],
+    links: [{ rel: "canonical", href: CONTACTS_URL }],
+  }),
   component: ContactsPage,
 });
 

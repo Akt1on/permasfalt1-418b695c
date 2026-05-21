@@ -61,7 +61,7 @@ function HomePage() {
       {/* HERO */}
       <section className="relative -mt-24 min-h-[100vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImg} alt="Асфальтирование" className="h-full w-full object-cover" width={1920} height={1080} />
+          <img src={heroImg} alt="Асфальтирование" className="h-full w-full object-cover" width={1920} height={1080} loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
           <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
           <div className="absolute inset-0 grid-pattern" />
@@ -101,12 +101,14 @@ function HomePage() {
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <Link to="/services" className="btn-gold rounded-xl px-8 py-4 font-semibold uppercase tracking-wide text-sm flex items-center gap-2">
-                Наши услуги <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href={`tel:${phone.replace(/[^+\d]/g,'')}`} className="glass rounded-xl px-8 py-4 font-semibold flex items-center gap-2 hover:border-primary/40 transition">
+              <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
+                <Link to="/services" className="btn-gold rounded-xl px-8 py-4 font-semibold uppercase tracking-wide text-sm flex items-center gap-2">
+                  Наши услуги <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+              <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} href={`tel:${phone.replace(/[^+\d]/g,'')}`} className="glass rounded-xl px-8 py-4 font-semibold flex items-center gap-2 hover:border-primary/40 transition">
                 <Phone className="h-4 w-4 text-primary" /> {phone}
-              </a>
+              </motion.a>
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}

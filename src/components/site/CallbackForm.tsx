@@ -23,18 +23,20 @@ export function CallbackForm({ source = "website", compact = false }: { source?:
   };
 
   return (
-    <form onSubmit={submit} className="grid gap-3">
+    <form onSubmit={submit} className="grid gap-3" aria-busy={loading}>
       {!compact && (
         <input
           value={name} onChange={(e) => setName(e.target.value)} placeholder="Ваше имя"
-          className="bg-input border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none transition"
+          disabled={loading}
+          className="bg-input border border-border rounded-3xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition"
         />
       )}
       <IMaskInput
         mask="+7 (000) 000-00-00" value={phone}
         onAccept={(v: string) => setPhone(v)}
         placeholder="+7 (___) ___-__-__" required
-        className="bg-input border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none transition"
+        disabled={loading}
+        className="bg-input border border-border rounded-3xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition"
       />
       {!compact && (
         <textarea

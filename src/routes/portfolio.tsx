@@ -5,16 +5,24 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { fetchProjects } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 
+const PORTFOLIO_URL = "https://permasfalt59.ru/portfolio";
+const PORTFOLIO_TITLE = "Портфолио — Пермь Асфальт 59";
+const PORTFOLIO_DESCRIPTION = "Галерея реализованных проектов: асфальтирование, плитка, демонтаж, земляные работы и благоустройство в Перми.";
+
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Портфолио — Пермь Асфальт 59" },
-      { name: "description", content: "Выполненные объекты: асфальтирование, укладка плитки, демонтаж, земляные работы." },
-      { property: "og:title", content: "Портфолио — Пермь Асфальт 59" },
-      { property: "og:description", content: "Фото выполненных объектов по асфальтированию и благоустройству в Перми и Пермском крае." },
-      { property: "og:url", content: "https://permasfalt59.ru/portfolio" },
+      { title: PORTFOLIO_TITLE },
+      { name: "description", content: PORTFOLIO_DESCRIPTION },
+      { property: "og:title", content: PORTFOLIO_TITLE },
+      { property: "og:description", content: PORTFOLIO_DESCRIPTION },
+      { property: "og:url", content: PORTFOLIO_URL },
+      { property: "og:site_name", content: "Пермь Асфальт 59" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: PORTFOLIO_TITLE },
+      { name: "twitter:description", content: PORTFOLIO_DESCRIPTION },
     ],
-    links: [{ rel: "canonical", href: "https://permasfalt59.ru/portfolio" }],
+    links: [{ rel: "canonical", href: PORTFOLIO_URL }],
   }),
   component: PortfolioLayout,
 });
