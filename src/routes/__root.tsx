@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FloatingContacts } from "@/components/site/FloatingContacts";
+import { CookieBanner } from "@/components/site/CookieBanner";
 import { PageTransition } from "@/components/site/PageTransition";
 import appCss from "../styles.css?url";
 
@@ -117,6 +118,7 @@ function RootComponent() {
         </main>
         {!isAdmin && <Footer />}
         {!isAdmin && <FloatingContacts />}
+        {!isAdmin && <CookieBanner />}
         <Toaster theme="dark" position="top-right" />
       </QueryClientProvider>
     </HelmetProvider>

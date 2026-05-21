@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { fetchServices } from "@/lib/site-data";
+import { getServiceImageUrl } from "@/lib/service-images";
 import { Section } from "@/components/site/Section";
 import { DynIcon } from "@/components/site/icon";
 
@@ -72,11 +73,9 @@ function ServicesIndex() {
               viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.45, delay: i * 0.05 }}
             >
               <Link to="/services/$slug" params={{ slug: s.slug }} className="group block glass rounded-3xl overflow-hidden h-full border border-border/40 transition-all duration-500 hover:border-primary/40 hover:shadow-glow-gold">
-                {s.image_url && (
-                  <div className="aspect-video overflow-hidden">
-                    <img src={s.image_url} alt={s.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                  </div>
-                )}
+                <div className="aspect-video overflow-hidden bg-surface">
+                  <img src={getServiceImageUrl(s)} alt={s.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                </div>
                 <div className="p-7">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="h-11 w-11 rounded-xl btn-gold grid place-items-center shrink-0">

@@ -2,6 +2,7 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check, Phone } from "lucide-react";
 import { fetchService, fetchPricing, fetchServices, fetchSettings } from "@/lib/site-data";
+import { getServiceImageUrl } from "@/lib/service-images";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { DynIcon } from "@/components/site/icon";
 
@@ -72,12 +73,10 @@ function ServicePage() {
   return (
     <>
       <section className="relative overflow-hidden -mt-24 pt-32 pb-16">
-        {service.image_url && (
-          <div className="absolute inset-0">
-            <img src={service.image_url} alt={service.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/50" />
-          </div>
-        )}
+        <div className="absolute inset-0">
+          <img src={service.image_url || getServiceImageUrl(service)} alt={service.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/50" />
+        </div>
         <div className="container-x relative z-10 pt-16 pb-10">
           <Link to="/services" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-8">
             <ArrowLeft className="h-4 w-4" /> Все услуги

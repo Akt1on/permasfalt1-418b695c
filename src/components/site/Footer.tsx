@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSettings, fetchServices } from "@/lib/site-data";
+import { getServiceImageUrl } from "@/lib/service-images";
 
 export function Footer() {
   const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
@@ -53,6 +54,8 @@ export function Footer() {
             <li><Link to="/about" className="hover:text-primary transition">О нас</Link></li>
             <li><Link to="/portfolio" className="hover:text-primary transition">Портфолио</Link></li>
             <li><Link to="/contacts" className="hover:text-primary transition">Контакты</Link></li>
+            <li><Link to="/privacy-policy" className="hover:text-primary transition">Конфиденциальность</Link></li>
+            <li><Link to="/cookie-policy" className="hover:text-primary transition">Cookies</Link></li>
             <li><Link to="/admin" className="hover:text-primary transition">Админ-панель</Link></li>
           </ul>
         </div>
