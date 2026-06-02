@@ -14,6 +14,7 @@ export const Route = createFileRoute("/contacts")({
     meta: [
       { title: CONTACTS_TITLE },
       { name: "description", content: CONTACTS_DESCRIPTION },
+      { name: "keywords", content: "контакты пермь асфальт 59, телефон асфальтирование пермь, заказать асфальтирование пермь, дорожная компания пермь адрес, асфальтирование пермь номер" },
       { property: "og:title", content: CONTACTS_TITLE },
       { property: "og:description", content: CONTACTS_DESCRIPTION },
       { property: "og:url", content: CONTACTS_URL },

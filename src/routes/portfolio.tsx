@@ -14,6 +14,7 @@ export const Route = createFileRoute("/portfolio")({
     meta: [
       { title: PORTFOLIO_TITLE },
       { name: "description", content: PORTFOLIO_DESCRIPTION },
+      { name: "keywords", content: "портфолио асфальтирования пермь, выполненные работы по благоустройству, объекты асфальтирования пермский край, фото уложенной плитки, примеры работ дорожной компании пермь" },
       { property: "og:title", content: PORTFOLIO_TITLE },
       { property: "og:description", content: PORTFOLIO_DESCRIPTION },
       { property: "og:url", content: PORTFOLIO_URL },
