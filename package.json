@@ -1,12 +1,13 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "permasfalt-portfolio",
   "private": true,
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && node ./scripts/finalize-build.mjs",
-    "build:dev": "vite build --mode development && node ./scripts/finalize-build.mjs",
+    "generate-static": "bun run src/scripts/generate-static.ts",
+    "build": "bun run generate-static && vite build && node ./scripts/finalize-build.mjs",
+    "build:dev": "bun run generate-static && vite build --mode development && node ./scripts/finalize-build.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -61,6 +62,7 @@
     "react-imask": "^7.6.1",
     "react-resizable-panels": "^4.6.5",
     "recharts": "^2.15.4",
+    "sharp": "^0.33.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.1",
