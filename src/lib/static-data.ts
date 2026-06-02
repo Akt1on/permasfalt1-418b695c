@@ -205,7 +205,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Асфальтирование",
     description:
       "Укладка асфальта на парковке торгового центра площадью 4 000 м². Подготовка основания, укладка двух слоёв асфальтобетона, установка бордюров.",
-    cover_image: "/assets/service-asphalt.jpg",
+    cover_image: serviceAsphalt,
     location: "Пермь, ул. Ленина",
     completed_at: "2024-09-15",
     sort_order: 1,
@@ -218,7 +218,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Тротуарная плитка",
     description:
       "Благоустройство придомовой территории: укладка тротуарной плитки 1 200 м², установка бордюров, организация дренажа.",
-    cover_image: "/assets/service-tiles.jpg",
+    cover_image: serviceTiles,
     location: "Пермь, Дзержинский район",
     completed_at: "2024-08-20",
     sort_order: 2,
@@ -231,7 +231,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Земляные работы",
     description:
       "Разработка котлована 500 м³ под фундамент складского комплекса, планировка территории, устройство дренажной системы.",
-    cover_image: "/assets/service-earth.jpg",
+    cover_image: serviceEarth,
     location: "Краснокамск",
     completed_at: "2024-07-10",
     sort_order: 3,
@@ -244,7 +244,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Демонтаж",
     description:
       "Полный демонтаж двухэтажного кирпичного здания 800 м², вывоз строительного мусора, планировка площадки.",
-    cover_image: "/assets/service-demolition.jpg",
+    cover_image: serviceDemolition,
     location: "Пермь, Мотовилихинский район",
     completed_at: "2024-06-05",
     sort_order: 4,
@@ -257,7 +257,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Асфальтирование",
     description:
       "Асфальтирование территории промышленного предприятия 8 000 м². Усиленное основание из щебня, асфальт толщиной 10 см.",
-    cover_image: "/assets/service-materials.jpg",
+    cover_image: serviceMaterials,
     location: "Пермь, Орджоникидзевский район",
     completed_at: "2024-05-28",
     sort_order: 5,
@@ -270,7 +270,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: "Благоустройство",
     description:
       "Асфальтирование проездов, укладка тротуарной плитки на пешеходных зонах, установка бордюров и освещения.",
-    cover_image: "/assets/hero-asphalt.jpg",
+    cover_image: heroAsphalt,
     location: "Пермь, Свердловский район",
     completed_at: "2024-04-15",
     sort_order: 6,
