@@ -3,18 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowRight, Check, Phone, Shield, Clock, Award, Sparkles, Star, Quote, MapPin, Plus, Minus } from "lucide-react";
-import { fetchServices, fetchProjects, fetchSettings, fetchReviews } from "@/lib/site-data";
+import { fetchServices, fetchProjects, fetchSettings, fetchReviews, STATIC_SERVICES, STATIC_PROJECTS, STATIC_SETTINGS, STATIC_REVIEWS } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { Quiz } from "@/components/site/Quiz";
 import { DynIcon } from "@/components/site/icon";
 import heroImg from "@/assets/hero-asphalt.jpg";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/")({ 
   loader: async ({ context: { queryClient } }: any) => {
     await Promise.allSettled([
+      queryClient.prefetchQuery({ queryKey: ["services"], queryFn: fetchServices }),
       queryClient.prefetchQuery({ queryKey: ["projects"], queryFn: fetchProjects }),
       queryClient.prefetchQuery({ queryKey: ["reviews"], queryFn: fetchReviews }),
+      queryClient.prefetchQuery({ queryKey: ["settings"], queryFn: fetchSettings }),
     ]);
   },
   head: () => ({
@@ -55,10 +57,10 @@ const FAQS = [
 const GEO = ["Пермь", "Краснокамск", "Березники", "Соликамск", "Чайковский", "Кунгур", "Лысьва", "Чусовой", "Добрянка", "Оса", "Нытва", "Верещагино"];
 
 function HomePage() {
-  const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
-  const { data: projects = [] } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects });
-  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
-  const { data: reviews = [] } = useQuery({ queryKey: ["reviews"], queryFn: fetchReviews });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
+  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: 60_000 });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
+  const { data: reviews = STATIC_REVIEWS } = useQuery({ queryKey: ["reviews"], queryFn: fetchReviews, initialData: STATIC_REVIEWS, staleTime: 60_000 });
   const hero = settings?.hero ?? {};
   const about = settings?.about ?? {};
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
@@ -251,7 +253,9 @@ function HomePage() {
               viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: i * 0.05 }}
             >
               <Link to="/portfolio/$slug" params={{ slug: p.slug }} className="group block relative overflow-hidden rounded-2xl aspect-[4/5] glass">
-                <img src={p.cover_image ?? ""} alt={p.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                {p.cover_image && (
+                  <img src={p.cover_image} alt={p.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <div className="text-[10px] uppercase tracking-widest text-primary mb-2">{p.category}</div>
@@ -274,7 +278,7 @@ function HomePage() {
       {/* ABOUT / STATS */}
       <Section eyebrow="О компании" title={about.title ?? "Кладём асфальт и плитку с 2010 года"} subtitle={about.text}>
         <div className="grid md:grid-cols-4 gap-5 mt-8">
-          {(about.stats ?? []).map((s: any, i: number) => (
+          {(about.stats ?? STATIC_SETTINGS.about.stats).map((s: any, i: number) => (
             <motion.div key={i}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}

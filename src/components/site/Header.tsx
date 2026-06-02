@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchServices, fetchSettings } from "@/lib/site-data";
+import { fetchServices, fetchSettings, STATIC_SERVICES, STATIC_SETTINGS } from "@/lib/site-data";
 
 const nav = [
   { to: "/", label: "Главная" },
@@ -21,12 +21,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
-  const { data: services = [] } = useQuery({
-    queryKey: ["services"],
-    queryFn: fetchServices,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
 
   useEffect(() => {

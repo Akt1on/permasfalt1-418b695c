@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check, Phone } from "lucide-react";
-import { fetchService, fetchPricing, fetchServices, fetchSettings } from "@/lib/site-data";
+import { fetchService, fetchPricing, fetchServices, fetchSettings, STATIC_SERVICES, STATIC_SETTINGS } from "@/lib/site-data";
 import { getServiceImageUrl } from "@/lib/service-images";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { DynIcon } from "@/components/site/icon";
@@ -52,12 +52,13 @@ export const Route = createFileRoute("/services/$slug")({
 
 function ServicePage() {
   const { slug } = useParams({ from: "/services/$slug" });
-  const { data: service, isLoading } = useQuery({ queryKey: ["service", slug], queryFn: () => fetchService(slug) });
+  const staticService = STATIC_SERVICES.find((s) => s.slug === slug) ?? null;
+  const { data: service = staticService, isLoading } = useQuery({ queryKey: ["service", slug], queryFn: () => fetchService(slug), initialData: staticService, staleTime: 60_000 });
   const { data: pricing = [] } = useQuery({
     queryKey: ["pricing", service?.id], queryFn: () => fetchPricing(service!.id), enabled: !!service?.id,
   });
-  const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices, staleTime: 1000 * 60 * 5 });
-  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
   const anchors = [
     { id: "overview", label: "Описание" },

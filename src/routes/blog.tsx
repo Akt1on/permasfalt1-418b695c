@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Section } from "@/components/site/Section";
-import { fetchPosts } from "@/lib/site-data";
+import { fetchPosts, STATIC_POSTS } from "@/lib/site-data";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const { data: posts = [], isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts });
+  const { data: posts = STATIC_POSTS, isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts, initialData: STATIC_POSTS, staleTime: 60_000 });
 
   return (
     <main>

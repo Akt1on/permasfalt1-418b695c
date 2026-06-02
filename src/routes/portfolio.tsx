@@ -2,28 +2,19 @@ import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-r
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin } from "lucide-react";
-import { fetchProjects } from "@/lib/site-data";
+import { fetchProjects, STATIC_PROJECTS } from "@/lib/site-data";
 import { Section } from "@/components/site/Section";
-
-const PORTFOLIO_URL = "https://permasfalt59.ru/portfolio";
-const PORTFOLIO_TITLE = "Портфолио — Пермь Асфальт 59";
-const PORTFOLIO_DESCRIPTION = "Галерея реализованных проектов: асфальтирование, плитка, демонтаж, земляные работы и благоустройство в Перми.";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: PORTFOLIO_TITLE },
-      { name: "description", content: PORTFOLIO_DESCRIPTION },
-      { name: "keywords", content: "портфолио асфальтирования пермь, выполненные работы по благоустройству, объекты асфальтирования пермский край, фото уложенной плитки, примеры работ дорожной компании пермь" },
-      { property: "og:title", content: PORTFOLIO_TITLE },
-      { property: "og:description", content: PORTFOLIO_DESCRIPTION },
-      { property: "og:url", content: PORTFOLIO_URL },
-      { property: "og:site_name", content: "Пермь Асфальт 59" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: PORTFOLIO_TITLE },
-      { name: "twitter:description", content: PORTFOLIO_DESCRIPTION },
+      { title: "Портфолио — Пермь Асфальт 59" },
+      { name: "description", content: "Галерея реализованных проектов: асфальтирование, плитка, демонтаж, земляные работы и благоустройство в Перми." },
+      { name: "keywords", content: "портфолио асфальтирования пермь, выполненные работы по благоустройству, объекты асфальтирования пермский край" },
+      { property: "og:title", content: "Портфолио — Пермь Асфальт 59" },
+      { property: "og:url", content: "https://permasfalt59.ru/portfolio" },
     ],
-    links: [{ rel: "canonical", href: PORTFOLIO_URL }],
+    links: [{ rel: "canonical", href: "https://permasfalt59.ru/portfolio" }],
   }),
   component: PortfolioLayout,
 });
@@ -35,7 +26,7 @@ function PortfolioLayout() {
 }
 
 function PortfolioIndex() {
-  const { data: projects = [] } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects });
+  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: 60_000 });
   return (
     <Section eyebrow="Портфолио" title={<>Наши <span className="text-gradient-gold">объекты</span></>} subtitle="Каждый проект — индивидуальное решение, фиксированная смета и гарантия.">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -45,8 +36,10 @@ function PortfolioIndex() {
             viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: i * 0.05 }}
           >
             <Link to="/portfolio/$slug" params={{ slug: p.slug }} className="group block glass rounded-2xl overflow-hidden hover:border-primary/40 transition">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={p.cover_image ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+              <div className="aspect-[4/3] overflow-hidden bg-surface">
+                {p.cover_image && (
+                  <img src={p.cover_image} alt={p.title} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                )}
               </div>
               <div className="p-6">
                 <div className="text-[10px] uppercase tracking-widest text-primary mb-2">{p.category}</div>

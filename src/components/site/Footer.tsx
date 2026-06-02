@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchSettings, fetchServices } from "@/lib/site-data";
+import { fetchSettings, fetchServices, STATIC_SETTINGS, STATIC_SERVICES } from "@/lib/site-data";
 import { getServiceImageUrl } from "@/lib/service-images";
 
 export function Footer() {
-  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
-  const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
   const c = settings?.contacts ?? {};
   return (
     <footer className="relative mt-32 border-t border-border/50 bg-background/80 backdrop-blur-2xl">

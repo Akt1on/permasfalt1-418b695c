@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-r
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { fetchServices } from "@/lib/site-data";
+import { fetchServices, STATIC_SERVICES } from "@/lib/site-data";
 import { getServiceImageUrl } from "@/lib/service-images";
 import { Section } from "@/components/site/Section";
 import { DynIcon } from "@/components/site/icon";
@@ -15,13 +15,9 @@ export const Route = createFileRoute("/services")({
     meta: [
       { title: "Услуги — Пермь Асфальт 59" },
       { name: "description", content: "Полный список услуг: асфальтирование, укладка плитки, демонтаж, земляные работы, аренда спецтехники, доставка нерудных материалов." },
-      { name: "keywords", content: "услуги асфальтирования пермь, укладка тротуарной плитки пермь, демонтаж пермь, земляные работы, аренда спецтехники пермь, доставка щебня и песка, вывоз снега и мусора, кронирование деревьев пермь, благоустройство территорий пермский край" },
+      { name: "keywords", content: "услуги асфальтирования пермь, укладка тротуарной плитки пермь, демонтаж пермь, земляные работы, аренда спецтехники пермь" },
       { property: "og:title", content: "Услуги — Пермь Асфальт 59" },
       { property: "og:description", content: "Асфальтирование, тротуарная плитка, демонтаж, земляные работы и спецтехника в Перми." },
-      { property: "og:site_name", content: "Пермь Асфальт 59" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Услуги — Пермь Асфальт 59" },
-      { name: "twitter:description", content: "Асфальтирование, тротуарная плитка, демонтаж, земляные работы и спецтехника в Перми." },
       { property: "og:url", content: "https://permasfalt59.ru/services" },
     ],
     links: [{ rel: "canonical", href: "https://permasfalt59.ru/services" }],
@@ -36,7 +32,7 @@ function ServicesLayout() {
 }
 
 function ServicesIndex() {
-  const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: fetchServices });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
   return (
     <>
       <section className="relative overflow-hidden py-20">

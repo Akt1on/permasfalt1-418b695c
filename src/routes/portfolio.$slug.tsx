@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, MapPin } from "lucide-react";
-import { fetchProject, fetchProjectPhotos } from "@/lib/site-data";
+import { fetchProject, fetchProjectPhotos, STATIC_PROJECTS } from "@/lib/site-data";
 import { CallbackForm } from "@/components/site/CallbackForm";
 
 const BASE = "https://permasfalt59.ru";
@@ -31,7 +31,8 @@ export const Route = createFileRoute("/portfolio/$slug")({
 
 function ProjectPage() {
   const { slug } = useParams({ from: "/portfolio/$slug" });
-  const { data: project, isLoading } = useQuery({ queryKey: ["project", slug], queryFn: () => fetchProject(slug) });
+  const staticProject = STATIC_PROJECTS.find((p) => p.slug === slug) ?? null;
+  const { data: project = staticProject, isLoading } = useQuery({ queryKey: ["project", slug], queryFn: () => fetchProject(slug), initialData: staticProject, staleTime: 60_000 });
   const { data: photos = [] } = useQuery({
     queryKey: ["project-photos", project?.id], queryFn: () => fetchProjectPhotos(project!.id), enabled: !!project?.id,
   });
