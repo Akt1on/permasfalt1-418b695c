@@ -22,6 +22,7 @@ export const Route = createFileRoute("/services/$slug")({
       meta: [
         { title },
         { name: "description", content: description },
+        ...(s?.keywords ? [{ name: "keywords", content: s.keywords }] : []),
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:site_name", content: "Пермь Асфальт 59" },

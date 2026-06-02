@@ -4,6 +4,7 @@ export type Service = {
   id: string; slug: string; title: string; short_description: string | null;
   description: string | null; image_url: string | null; icon: string | null;
   price_from: number | null; price_unit: string | null; sort_order: number; is_active: boolean;
+  keywords?: string | null;
 };
 export type Project = {
   id: string; slug: string; title: string; category: string | null;

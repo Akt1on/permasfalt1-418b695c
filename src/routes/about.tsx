@@ -14,6 +14,7 @@ export const Route = createFileRoute("/about")({
     meta: [
       { title: ABOUT_TITLE },
       { name: "description", content: ABOUT_DESCRIPTION },
+      { name: "keywords", content: "о компании пермь асфальт 59, асфальтирование пермь компания, дорожно-строительная компания пермь, благоустройство территорий пермский край, опыт асфальтирования с 2010 года" },
       { property: "og:title", content: ABOUT_TITLE },
       { property: "og:description", content: ABOUT_DESCRIPTION },
       { property: "og:url", content: ABOUT_URL },
