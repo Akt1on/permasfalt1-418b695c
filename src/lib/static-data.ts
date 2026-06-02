@@ -4,6 +4,13 @@
  * Используется как начальные данные (instant render) и резервный вариант при проблемах с Supabase.
  */
 
+import serviceAsphalt from "../assets/service-asphalt.jpg";
+import serviceTiles from "../assets/service-tiles.jpg";
+import serviceEarth from "../assets/service-earth.jpg";
+import serviceDemolition from "../assets/service-demolition.jpg";
+import serviceMaterials from "../assets/service-materials.jpg";
+import heroAsphalt from "../assets/hero-asphalt.jpg";
+
 import type { Service, Project, Review, SiteSettings, Post } from "./site-data";
 
 export const STATIC_SETTINGS: SiteSettings = {
