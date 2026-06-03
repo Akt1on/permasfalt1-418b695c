@@ -21,7 +21,7 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const { data: posts = STATIC_POSTS, isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts, initialData: STATIC_POSTS, staleTime: 60_000 });
+  const { data: posts = STATIC_POSTS, isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts, initialData: STATIC_POSTS, staleTime: Infinity });
 
   return (
     <main>

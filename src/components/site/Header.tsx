@@ -21,8 +21,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
-  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity });
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
 
   useEffect(() => {

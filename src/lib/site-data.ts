@@ -34,9 +34,9 @@ export type Post = {
 
 const TIMEOUT_MS = 4000;
 
-async function withTimeout<T>(promise: Promise<T>, fallback: T): Promise<T> {
+async function withTimeout<T>(promise: PromiseLike<T>, fallback: T): Promise<T> {
   return Promise.race([
-    promise,
+    Promise.resolve(promise),
     new Promise<T>((resolve) => setTimeout(() => resolve(fallback), TIMEOUT_MS)),
   ]);
 }
