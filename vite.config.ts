@@ -6,12 +6,29 @@ import fs from "node:fs";
 import path from "node:path";
 
 export default defineConfig({
-  cloudflare: false,
   tanstackStart: {
     spa: { enabled: true, prerender: { outputPath: "/_shell" } },
     prerender: { enabled: true, failOnError: false },
     sitemap: { enabled: false },
-    pages: ["/", "/services", "/portfolio", "/blog", "/about", "/contacts"].map((path) => ({
+    pages: [
+      "/",
+      "/services",
+      "/portfolio",
+      "/blog",
+      "/about",
+      "/contacts",
+      "/privacy-policy",
+      "/cookie-policy",
+      "/services/asfaltirovanie",
+      "/services/ukladka-plitki",
+      "/services/demontazh",
+      "/services/zemlyanye-raboty",
+      "/services/nerudnye-materialy",
+      "/services/arenda-spectexniki",
+      "/services/vyvoz-snega",
+      "/services/vyvoz-musora",
+      "/services/kronirovanie",
+    ].map((path) => ({
       path,
       prerender: { enabled: true, crawlLinks: false, retryCount: 0 },
     })),
