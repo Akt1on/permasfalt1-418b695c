@@ -57,10 +57,10 @@ const FAQS = [
 const GEO = ["Пермь", "Краснокамск", "Березники", "Соликамск", "Чайковский", "Кунгур", "Лысьва", "Чусовой", "Добрянка", "Оса", "Нытва", "Верещагино"];
 
 function HomePage() {
-  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity });
-  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: Infinity });
-  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity });
-  const { data: reviews = STATIC_REVIEWS } = useQuery({ queryKey: ["reviews"], queryFn: fetchReviews, initialData: STATIC_REVIEWS, staleTime: Infinity });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity, initialDataUpdatedAt: 0 });
+  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: Infinity, initialDataUpdatedAt: 0 });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity, initialDataUpdatedAt: 0 });
+  const { data: reviews = STATIC_REVIEWS } = useQuery({ queryKey: ["reviews"], queryFn: fetchReviews, initialData: STATIC_REVIEWS, staleTime: Infinity, initialDataUpdatedAt: 0 });
   const hero = settings?.hero ?? {};
   const about = settings?.about ?? {};
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
