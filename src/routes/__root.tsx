@@ -9,6 +9,7 @@ import { CookieBanner } from "@/components/site/CookieBanner";
 import { PageTransition } from "@/components/site/PageTransition";
 import { fetchServices, fetchSettings } from "@/lib/site-data";
 import appCss from "../styles.css?url";
+import YandexMetrika from "@/components/YandexMetrika";
 
 const SITE_URL = "https://permasfalt59.ru";
 const SITE_TITLE = "Пермь Асфальт 59 — асфальтирование и благоустройство в Перми";
@@ -118,6 +119,7 @@ function RootComponent() {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
+        <YandexMetrika />
         {!isAdmin && <Header />}
         <main className={!isAdmin ? "pt-24" : ""}>
           <PageTransition path={path}>
