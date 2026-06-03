@@ -32,7 +32,7 @@ function ServicesLayout() {
 }
 
 function ServicesIndex() {
-  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity });
   return (
     <>
       <section className="relative overflow-hidden py-20">

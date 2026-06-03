@@ -26,7 +26,7 @@ function PortfolioLayout() {
 }
 
 function PortfolioIndex() {
-  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: 60_000 });
+  const { data: projects = STATIC_PROJECTS } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects, initialData: STATIC_PROJECTS, staleTime: Infinity });
   return (
     <Section eyebrow="Портфолио" title={<>Наши <span className="text-gradient-gold">объекты</span></>} subtitle="Каждый проект — индивидуальное решение, фиксированная смета и гарантия.">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

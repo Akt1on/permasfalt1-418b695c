@@ -53,12 +53,12 @@ export const Route = createFileRoute("/services/$slug")({
 function ServicePage() {
   const { slug } = useParams({ from: "/services/$slug" });
   const staticService = STATIC_SERVICES.find((s) => s.slug === slug) ?? null;
-  const { data: service = staticService, isLoading } = useQuery({ queryKey: ["service", slug], queryFn: () => fetchService(slug), initialData: staticService, staleTime: 60_000 });
+  const { data: service = staticService, isLoading } = useQuery({ queryKey: ["service", slug], queryFn: () => fetchService(slug), initialData: staticService, staleTime: Infinity });
   const { data: pricing = [] } = useQuery({
     queryKey: ["pricing", service?.id], queryFn: () => fetchPricing(service!.id), enabled: !!service?.id,
   });
-  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: 60_000 });
-  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: 60_000 });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity });
   const phone = settings?.contacts?.phone ?? "+7 (342) 277-77-10";
   const anchors = [
     { id: "overview", label: "Описание" },
