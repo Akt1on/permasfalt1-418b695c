@@ -32,7 +32,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
 function ProjectPage() {
   const { slug } = useParams({ from: "/portfolio/$slug" });
   const staticProject = STATIC_PROJECTS.find((p) => p.slug === slug) ?? null;
-  const { data: project = staticProject, isLoading } = useQuery({ queryKey: ["project", slug], queryFn: () => fetchProject(slug), initialData: staticProject, staleTime: Infinity });
+  const { data: project = staticProject, isLoading } = useQuery({ queryKey: ["project", slug], queryFn: () => fetchProject(slug), initialData: staticProject, staleTime: Infinity, initialDataUpdatedAt: 0 });
   const { data: photos = [] } = useQuery({
     queryKey: ["project-photos", project?.id], queryFn: () => fetchProjectPhotos(project!.id), enabled: !!project?.id,
   });

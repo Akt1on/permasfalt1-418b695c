@@ -5,8 +5,8 @@ import { fetchSettings, fetchServices, STATIC_SETTINGS, STATIC_SERVICES } from "
 import { getServiceImageUrl } from "@/lib/service-images";
 
 export function Footer() {
-  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity });
-  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity });
+  const { data: settings = STATIC_SETTINGS } = useQuery({ queryKey: ["settings"], queryFn: fetchSettings, initialData: STATIC_SETTINGS, staleTime: Infinity, initialDataUpdatedAt: 0 });
+  const { data: services = STATIC_SERVICES } = useQuery({ queryKey: ["services"], queryFn: fetchServices, initialData: STATIC_SERVICES, staleTime: Infinity, initialDataUpdatedAt: 0 });
   const c = settings?.contacts ?? {};
   return (
     <footer className="relative mt-32 border-t border-border/50 bg-background/80 backdrop-blur-2xl">
