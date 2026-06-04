@@ -4,6 +4,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import fs from "node:fs";
 import path from "node:path";
+import { imageOptimizer } from 'vite-plugin-image-optimizer';
 
 export default defineConfig({
   tanstackStart: {
@@ -45,6 +46,19 @@ export default defineConfig({
       reportCompressedSize: false,
     },
     plugins: [
+      imageOptimizer({
+        test: /\.(jpg|jpeg|png|webp|avif)$/i,
+        include: ['public/**/*', 'src/assets/**/*'],
+        compress: {
+          jpg: { quality: 80 },
+          png: { quality: 80, compressionLevel: 8 },
+          webp: { quality: 80 },
+        },
+        convert: {
+          jpg: 'webp',
+          png: 'webp',
+        }
+      }),
       {
         // TanStack's SPA prerender may expect server.js while the build emits index.js.
         // Mirror the entry so prerender can boot reliably on static Vercel builds.
